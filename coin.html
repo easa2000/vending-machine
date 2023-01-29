@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Acme Vending Machine</title>
+        <style>
+            body{
+                background-color: #F7EFE5;
+            }
+
+            .main{
+                background-color: white;
+                padding: 0%;
+                text-align: center;
+                
+            }
+
+
+            .main p{
+                font-size: 20px;
+                font-family: sans-serif;
+                padding: 3px;
+                margin: 3px;
+                text-align: center;
+            }
+            tr{
+                text-justify: auto;
+                font-size: 20px;
+                text-align: center;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            table{
+                text-align: center;
+            }
+            #heading{
+                font-family: sans-serif;
+                text-align: center;
+                color: white;
+                background-color: darkblue;
+                width: 100%;
+                padding: 2%;
+                margin: 0px;
+            }
+        
+            </style>
+        <script>
+            function calc(){
+                let text=document.getElementById("text").value;
+                let num=document.getElementById("num").value;
+                let count=document.getElementById("count").value;
+                myArray = text.split(",");
+                ct=count.split(",");
+                if(ct.length!==myArray.length){
+                    window.alert("Length doesn't match the denomination and count ");
+                }
+                for(let j=0;j<myArray.length;j++){
+                    myArray[j]=Number(myArray[j]);
+                    ct[j]=Number(ct[j]);
+                }   
+               for(let i=0;i<myArray.length;i=i+1){
+                   min=myArray[i];
+                   for(let j=i+1;j<myArray.length;j=j+1){
+                       if(min>myArray[j]){
+                           temp=myArray[j];
+                           myArray[j]=myArray[i];
+                           myArray[i]=temp;
+                           min=temp;
+                           temp=ct[i];
+                           ct[i]=ct[j];
+                           ct[j]=temp;
+                       }
+                   }
+               }
+                var tbodyRef = document.getElementById('ntables').getElementsByTagName('tbody')[0];
+
+                var newRow = tbodyRef.insertRow();
+
+                var newCell = newRow.insertCell();
+                var anothercell=newRow.insertCell();
+
+                var newText = document.createTextNode("Value"+": ");
+                newCell.appendChild(newText);
+                var newText = document.createTextNode("Count");
+                newCell.appendChild(newText);
+                for(let i=myArray.length-1;i>=0;i=i-1){
+                    let count=0;       
+                    while(myArray[i]<=num && ct[i]>0){
+                        count+=1;
+                        num=num-myArray[i];
+                        ct[i]=ct[i]-1;
+                        }
+                    var tbodyRef = document.getElementById('ntables').getElementsByTagName('tbody')[0];
+
+
+                    var newRow = tbodyRef.insertRow();
+                    var newCell = newRow.insertCell();
+                    var anothercell=newRow.insertCell();
+                    var newText = document.createTextNode(myArray[i]+":");
+                    newCell.appendChild(newText);
+                    var newText = document.createTextNode(count);
+                    newCell.appendChild(newText);
+                }
+            }
+            
+            </script>
+    </head>
+    <body>
+        <h1 id="heading">Acme Vending Machine</h1>
+        <div class="main">
+        <p>Enter the denomination: <input type="text"  id="text" placeholder="Eg: 1,2,5,10"></p>
+        
+        <p>Enter the number of coins in each denomination: <input type="text" id="count" placeholder="Eg: 2,3,5,0"></p>
+        
+        <p>Enter the cost: <input type="text" id="num" placeholder="Eg: 43"></p>
+        
+        <input type="submit" onclick='calc()'>
+        <table id="ntables" >
+            <tbody >
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+  </tbody>
+        </table>
+        </div>
+    </body>
+</html>
